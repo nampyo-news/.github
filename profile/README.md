@@ -1,4 +1,3 @@
-````markdown
 <div align="center">
 
 # 📰 남표뉴스 (Nampyo News)
