@@ -1,206 +1,248 @@
-# 📰 남표뉴스 (Nampyo News)
+# 남표뉴스 (Nampyo News)
 
-빅카인즈 기반 실시간 뉴스 분석 및 언론 보도 경향 시각화 웹사이트
-
-'남표뉴스'는 특정 사회적 이슈에 대한 주요 언론사들의 보도 경향을 빅카인즈(BIGKINDS) 데이터를 기반으로 분석하고, 그 결과를 시각적으로 제공하여 사용자가 미디어 지형을 객관적으로 이해할 수 있도록 돕는 웹 서비스입니다.
-
-🧑‍💻 개발팀 및 역할
-
-이름 (GitHub)
-
-역할
-
-담당 기술 스택
-
-김선표 (Roflaff)
-
-백엔드 개발 및 시스템 아키텍처
-
-Python (FastAPI), BIGKINDS API, Naver Search API, SSE
-
-남민지 (하이디)
-
-기획 및 프론트엔드 개발
-
-기획, UI/UX 설계 (Figma), 프론트엔드 구현
-
-✨ 주요 기능
-
-실시간 뉴스 스트리밍: Naver Search API를 통해 검색어 기반의 최신 뉴스 목록을 SSE (Server-Sent Events) 방식으로 실시간 제공합니다.
-
-진영별 키워드 분석: BIGKINDS API를 활용하여 수집된 뉴스 기사의 메타 정보 및 키워드를 추출하고, 언론사 진영(진보/보수)별 키워드 빈도 상위 통계를 제공합니다.
-
-보도 경향 시각화: 분석된 진영별 키워드 데이터를 프론트엔드에서 직관적인 시각화 자료로 구현하여 언론사 간의 담론 구성 차이를 명확하게 보여줍니다.
-
-🔬 핵심 분석 방법론: '노란봉투법' 사례 연구
-
-본 프로젝트의 핵심 분석 방법론은 진영별 키워드 빈도 분석 및 비교입니다.
-
-1. 분석 개요
-
-분석 대상 이슈: 노란봉투법 (노동조합 및 노동관계조정법 개정안)
-
-분석 기간: 2025년 7월 1일 ~ 10월 28일 (119일간)
-
-분석 언론사: 경향신문(진보), 한겨레(진보), 조선일보(보수), 동아일보(보수) (총 744건의 기사 수집)
-
-분석 목적: 동일한 이슈에 대해 진보 및 보수 언론이 어떤 개념과 용어를 중심으로 담론을 구성하는지 비교 분석합니다.
-
-2. 분석 결과 요약
-
-동일 이슈에 대해 진보 언론과 보수 언론은 뚜렷하게 구별되는 키워드 사용 패턴을 보였습니다.
-
-진영
-
-고유 키워드 (상위 10개 중)
-
-강조 포인트
-
-진보 (경향신문, 한겨레)
-
-노동자, 원청, 교섭
-
-노동 주체의 권리와 집단적 협의 과정 (H1-1 지지)
-
-보수 (조선일보, 동아일보)
-
-민주당, 한국, 대표
-
-법안의 절차적 문제, '기업'의 부담 및 시장 효율성 (H1-2 부분 지지)
-
-특히, '기업' 키워드의 등장 비율은 보수 언론이 0.97%로 진보 언론(0.55%)에 비해 약 1.76배 높게 나타나, 경제 주체의 부담을 부각하는 경향을 확인할 수 있었습니다.
-
-⚙️ 백엔드 아키텍처 (FastAPI)
-
-본 프로젝트의 백엔드는 고성능 비동기 처리를 위해 FastAPI를 기반으로 구축되었습니다.
-
-시스템 개요
-
-프레임워크: FastAPI (Python)
-
-특징: 비동기 서버, httpx.AsyncClient를 사용한 외부 API 비동기 호출, Server-Sent Events (SSE) 지원.
-
-설정 관리: pydantic-settings를 통한 환경 변수(X_NAVER_CLIENT_ID, BIGKINDS_API_KEY 등) 로드.
-
-로깅: 파일 기반 다중 레벨 로깅(INFO/WARNING/ERROR) 및 KST(한국 표준시) 타임존 적용.
-
-부트스트랩: 서버 시작 시 외부 API 상태 점검 파이프라인(start_server.py) 실행.
-
-아키텍처 구성 요소
-
-계층/모듈
-
-역할
-
-주요 기능
-
-router.py
-
-라우팅 계층
-
-API 버전 네임스페이스 (/public/v1) 관리
-
-news.py
-
-도메인 엔드포인트
-
-Naver SSE 스트림 제공, BIGKINDS 데이터 분석 처리
-
-naver_api.py
-
-서비스 계층
-
-Naver API 호출 및 SSE 제너레이터 구현
-
-bigkinds_api.py
-
-서비스 계층
-
-BIGKINDS 호출, 결과 정규화 및 진영별 키워드 집계
-
-request.py / response.py
-
-스키마 계층
-
-Pydantic을 활용한 요청/응답 스키마 정의
-
-데이터 흐름 개요
-
-실시간 스트리밍: 클라이언트 → GET /sse → Naver API (비동기) → 15초 주기 SSE 스트림 전송.
-
-키워드 분석: 클라이언트 → POST /bigkinds/get_info → BIGKINDS API 호출 → 문서 목록 파싱/필터링 → 언론사 진영 매핑 → 진영별 키워드 빈도 상위 10개 집계 → 최종 응답.
-
-🔌 API 엔드포인트
-
-#
-
-Endpoint
-
-Method
-
-설명
-
-1
-
-/public/v1/news/sse
-
-GET
-
-Naver 뉴스 검색 결과를 15초 주기로 SSE 스트리밍 제공. (Query: query 필수)
-
-2
-
-/public/v1/news/bigkinds/get_info
-
-POST
-
-BIGKINDS에서 뉴스 목록 수집, 가공 후 키워드 상위 통계 반환. (Body: query, from_timestamp, to_timestamp, provider 등)
-
-🛠️ 개발 및 협업 환경
-
-본 프로젝트는 효율적인 협업 및 개발 속도 향상을 위해 AI 기반 도구들을 적극적으로 활용했습니다.
-
-Figma 디자인: 서비스의 UI/UX 설계 및 시각화 구상은 Figma를 통해 진행되었습니다.
-
-v0 기반 구조 생성: AI 기반 코드 생성 도구인 v0를 활용하여 프로젝트의 기본 프론트엔드 구조를 신속하게 생성하고 nampyo-news-FE 레포지토리에 옮겨 개발을 시작했습니다.
-
-Copilot/Vibe Coding: 백엔드 개발 과정에서 VSCode 내장 기능을 활용하여 실시간 코드 제안 및 디버깅, API 연동 로직 구현을 효율적으로 진행했습니다. 특히 Simple Browser의 'Add element to chat' 기능을 통해 프론트엔드 요소 기반으로 백엔드 요구사항을 자연어로 전달하여 협업하였습니다.
-
-🚀 로컬 환경에서 시작하기
-
-1. 런타임 및 의존성
-
-Python: 3.10 이상
-
-의존성 관리: Poetry
-
-주요 패키지: FastAPI, httpx, pydantic v2, sse-starlette
-
-2. 환경 변수 설정
-
-프로젝트 루트에 .env.local 파일을 생성하고 다음 키들을 설정해야 합니다.
-
-# .env.local 예시
-X_NAVER_CLIENT_ID="YOUR_NAVER_CLIENT_ID"
-X_NAVER_CLIENT_SECRET="YOUR_NAVER_CLIENT_SECRET"
-BIGKINDS_API_KEY="YOUR_BIGKINDS_API_KEY"
-
-# (선택 사항) 언론사 진영 설정 오버라이드 (기본값 존재)
-# BLUE_PROVIDERS='["경향신문", "한겨레"]'
-# RED_PROVIDERS='["조선일보", "동아일보"]'
-
-
-3. 서버 실행
-
-의존성 설치:
-
-poetry install
-
-
-개발 서버 실행 (자동 리로드 포함):
-
-poetry run uvicorn nampyo_news.main:app --host 0.0.0.0 --port 8000 --reload
-
-
-API 문서 확인:
-서버 시작 후 http://localhost:8000/docs에서 OpenAPI 문서를 확인할 수 있습니다.
+> **빅카인즈(BIGKINDS) 기반 진보/보수 언론 보도 경향 분석 & 시각화 웹사이트**  
+> 개발: 김선표(Roflaff) · 남민지(깃허브 하이디)  
+> 역할: 남민지 – 기획 · 프론트엔드 / 김선표 – 백엔드
+
+---
+
+## 1. 프로젝트 소개
+
+**남표뉴스**는 한국 주요 일간지의 뉴스 데이터를 수집·분석해  
+**진보/보수 진영별 보도 프레임과 키워드 사용 패턴을 시각적으로 보여주는** 프로젝트입니다.
+
+- 데이터 소스
+  - **BIGKINDS API**: 기사 본문/메타데이터 및 키워드(TMS) 수집
+  - **Naver Search API**: 실시간/최근 뉴스 목록 스트리밍
+- 분석 단위
+  - 언론사별 기사
+  - 진영별(blue: 진보, red: 보수) 키워드 빈도
+- 제공 기능(요약)
+  - 검색어·기간·언론사 선택에 따른 **뉴스 목록 조회**
+  - **진영별 상위 키워드 TOP 10** 자동 집계
+  - 프론트엔드에서 **워드 크기·맵 형태 등으로 시각화**(예: 폰트 크기, 키워드 관계 맵)
+
+---
+
+## 2. 연구/분석 배경: “노란봉투법” 사례
+
+본 프로젝트의 초기 버전은 **노란봉투법** 관련 보도에 대한 학술 연구를 기반으로 합니다.
+
+- **분석 기간**: 2025-07-01 ~ 2025-10-28 (119일)  
+- **대상 언론사 (4개)**  
+  - 진보 성향: 경향신문, 한겨레  
+  - 보수 성향: 조선일보, 동아일보  
+- **총 기사 수**: 744건
+- **핵심 분석 방법**
+  - BIGKINDS에서 제공하는 **키워드(TMS, 명사 집합)**를 활용
+  - 언론사를 **진보(blue) / 보수(red)** 진영으로 분류
+  - 진영별로 **키워드 출현 빈도(%)**를 계산해 상위 10개를 비교
+
+### 2.1 진보 vs 보수: 상위 키워드 예시
+
+| 구분 | 상위 키워드(일부) | 특징 |
+|------|-------------------|------|
+| **진보 언론 (경향·한겨레)** | 봉투법(1.30%), 대통령(0.89%), 국민(0.80%), 정부(0.64%), 기업(0.55%), **원청(0.53%)**, **노동자(0.46%)**, **교섭(0.44%)**, 노조(0.45%) 등 | 진보 진영 고유 키워드: **‘노동자’, ‘원청’, ‘교섭’** → 노동권, 집단교섭, 구조적 관계를 강조하는 프레임 |
+| **보수 언론 (조선·동아)** | 봉투법(1.46%), 대통령(1.28%), 기업(0.97%), 국민(0.76%), 정부(0.72%), **민주당(0.69%)**, 통과(0.48%), **대표(0.46%)**, 노조(0.45%), **한국(0.39%)** 등 | 보수 진영 고유 키워드: **‘민주당’, ‘대표’, ‘한국’** → 정치 주체·정당·국가 프레임, 그리고 **기업(0.97%)** 비율이 진보보다 1.76배 높게 등장 |
+
+### 2.2 보도 프레임 차이
+
+- **보수 언론(조선/동아)**  
+  - 예: “노란봉투법 헌법소원 각하… 청구 기업에 노조 없어” 등  
+  - **법안의 절차적 정당성, 실효성, 기업 부담**에 초점을 둔 제목과 키워드 사용  
+  - 키워드 태그: ‘봉개’, ‘기업’, ‘노조’, ‘청구’, ‘부적격’ 등
+- **진보 언론(경향/한겨레)**  
+  - 노란봉투법을 **노동권 보호, 원청 책임, 집단적 협의 과정** 중심의 프레임으로 접근  
+  - H1-1(“진보 언론은 노동 주체의 권리와 집단적 가치를 강조하는 키워드를 더 많이 사용할 것이다”)를 지지
+
+**남표뉴스**는 이와 같은 **진영별 키워드·프레임 차이**를 웹에서 직관적으로 확인할 수 있게 만드는 것이 목표입니다.
+
+---
+
+## 3. 기능 개요
+
+### 3.1 사용자 기능
+
+- 🔍 **검색어 기반 뉴스 조회**
+  - 검색어, 기간, 언론사를 설정해 관련 기사 목록과 메타 데이터를 조회
+- 📈 **진영별 키워드 상위 10개 비교**
+  - 진보(blue) / 보수(red) 언론별 상위 키워드 및 비율을 표/그래프로 확인
+- 📰 **실시간 뉴스 스트리밍 (Naver API + SSE)**
+  - 15초 간격으로 최신 검색 결과를 스트림으로 받아 프론트에서 실시간 UI 업데이트
+- 🧠 **프레이밍/담론 구조 파악**
+  - 동일 이슈에 대해 각 진영이 어떤 단어를 중심으로 이야기를 구성하는지 직관적으로 확인
+
+### 3.2 기술적 특징
+
+- FastAPI 기반 비동기 백엔드
+- httpx AsyncClient로 Naver/BIGKINDS API 비동기 호출
+- **Server-Sent Events(SSE)** 기반 실시간 스트림
+- pydantic v2 & pydantic-settings를 활용한 설정/스키마 관리
+- 시작 시 외부 API 상태 점검 파이프라인
+- KST 타임존 기반 **파일 로깅(레벨별 분리)**
+
+---
+
+## 4. 아키텍처 개요
+
+### 4.1 전반 구조
+
+- **프론트엔드**
+  - React 기반 SPA  
+  - 피그마로 UI 설계 후, [v0.app](https://v0.app/)을 활용해 초기 구조 생성  
+  - VS Code + Copilot “바이브 코딩”으로 컴포넌트/스타일 개선  
+  - 별도 레포: [`nampyo-news/nampyo-news-FE`](https://github.com/nampyo-news/nampyo-news-FE)
+- **백엔드 (이 레포)**
+  - FastAPI + Uvicorn
+  - Naver Search API & BIGKINDS API 연동
+  - 키워드 집계 로직 및 진영 분류 로직 포함
+
+### 4.2 백엔드 구성 파일
+
+- `nampyo_news/main.py`
+  - FastAPI 앱 초기화, CORS, 라우터 마운트(`/public`)
+  - 루트 엔드포인트(`/`) 제공 (헬스 체크 겸용)
+- `nampyo_news/router.py`
+  - API 버전 네임스페이스: `/public/v1`
+  - 뉴스 도메인 라우터: `/public/v1/news/*`
+- `nampyo_news/apis/v1/news.py`
+  - `GET /sse` : Naver 뉴스 검색 결과 SSE 스트림
+  - `POST /bigkinds/get_info` : BIGKINDS 호출 후 분석 결과 반환
+- `nampyo_news/services/v1/naver_api.py`
+  - Naver Search API 호출 및 SSE 제너레이터
+- `nampyo_news/services/v1/bigkinds_api.py`
+  - BIGKINDS 호출, 응답 정규화, 진영별 키워드 집계
+- `nampyo_news/schemas/request.py`
+  - BIGKINDS 요청용 pydantic 모델 (중첩 구조 포함)
+- `nampyo_news/schemas/response.py`
+  - 표준 성공/에러 응답, `NewsInfoData` 등 데이터 모델
+- `nampyo_news/start_server.py`
+  - 서버 시작 시 **Naver/BIGKINDS API 상태 점검** 파이프라인
+- `nampyo_news/config.py`
+  - `.env.local` 기반 설정 로딩, API 키/언론사 분류(blue/red) 등
+- `nampyo_news/logger.py`
+  - INFO / WARNING / ERROR를 파일로 분리 기록 + 콘솔 출력
+  - KST 기반 시각 포맷 일원화
+
+---
+
+## 5. 데이터 흐름
+
+### 5.1 실시간 뉴스 스트림 (Naver API + SSE)
+
+1. 클라이언트 → `GET /public/v1/news/sse?query={검색어}`
+2. 백엔드 → Naver Search API 비동기 호출
+3. 응답 JSON을 `data: {...}\n\n` 형태의 SSE 프레임으로 15초 주기 전송
+4. 클라이언트 → 스트림을 받아 리스트/카드 형태 등으로 표현
+
+> 15초 간격으로 백엔드가 검색어에 기반한 최신 뉴스를 끊임없이 푸시합니다.
+
+### 5.2 BIGKINDS 기반 키워드 분석
+
+1. 클라이언트 → `POST /public/v1/news/bigkinds/get_info`
+   - `query`, `from_timestamp`, `to_timestamp`, `provider(언론사 목록)` 등 전달  
+2. 백엔드 → BIGKINDS API POST 호출
+3. 응답의 `return_object.documents`를 파싱
+4. `tms_raw_stream`에서 키워드(명사) 리스트를 추출
+5. 언론사 → 진영(blue/red)으로 매핑
+6. 진영별로 키워드 출현 빈도 계산 후 **상위 10개** 집계
+7. 기사 리스트 + `top_n_keywords`를 함께 반환
+
+> “사용자 입력(검색어 + 기간) → BIGKINDS 호출 → 키워드 빈도 계산 → 진영별 TOP 10 키워드 반환”  
+> 이 과정을 한 번의 API 요청으로 처리합니다.
+
+---
+
+## 6. API 설계
+
+### 6.1 실시간 뉴스 스트림 (SSE)
+
+- **Endpoint**
+  - `GET /public/v1/news/sse`
+- **Query**
+  - `query` (string, required) — 검색어
+- **Response**
+  - `Content-Type: text/event-stream`
+  - 각 이벤트:  
+    ```text
+    data: {네이버 뉴스 검색 결과 JSON}
+    
+    ```
+- **핵심 구현**
+  - `services/v1/naver_api.py::news_event_generator()`
+  - 15초 주기로 `fetch_naver_news()` 호출
+  - 예외/연결 종료 시 루프 종료
+
+### 6.2 BIGKINDS 뉴스 정보 조회 & 키워드 분석
+
+- **Endpoint**
+  - `POST /public/v1/news/bigkinds/get_info`
+- **Request Body** (`schemas/request.py::APIRequest`)
+  - `query: str | None`
+  - `from_timestamp: str | None` (YYYY-MM-DD)
+  - `to_timestamp: str | None` (YYYY-MM-DD)
+  - `provider: List[str] | None`  
+    - 미지정 시 Config의 blue/red 언론사 전체 사용
+  - `return_size: int | None = 1000` (내부적으로 최대 10,000까지 처리 로직 포함)
+- **Response** (`schemas/response.py`)
+  - `APISuccessResponse`:
+    - `status: "success"`
+    - `data: List[NewsInfoData]`
+    - `top_n_keywords: { "blue": [(keyword, count), ...], "red": [...] }`
+  - `APIErrorResponse`:
+    - `status: "error"`
+    - `data: 에러 상세 정보`
+- **내부 동작**
+  - 날짜 미지정 시 기본값: “최근 24시간”
+  - BIGKINDS 포맷에 맞게 Argument/PublishedAt 스키마 직렬화
+  - 언론사 → 진영 매핑 후 `collections.Counter`로 키워드 상위 10개 계산
+
+---
+
+## 7. 외부 서비스 연동
+
+### 7.1 Naver Search API
+
+- **Endpoint**
+  - `GET https://openapi.naver.com/v1/search/news.json`
+- **Auth**
+  - `X-Naver-Client-Id: Config().x_naver_client_id`
+  - `X-Naver-Client-Secret: Config().x_naver_client_secret`
+- **Params**
+  - `query`, `display` (기본 10) 등
+- **구현**
+  - `fetch_naver_news()` — httpx.AsyncClient로 비동기 호출
+
+### 7.2 BIGKINDS API
+
+- **Endpoint**
+  - `POST https://tools.kinds.or.kr/search/news`
+- **Auth**
+  - Request Body의 `access_key = Config().bigkinds_api_key`
+- **Payload**
+  - `NewsRequest(Argument(...))` → `model_dump(by_alias=True)`로 직렬화
+- **후처리**
+  - `return_object.documents`에서 주요 필드 추출
+  - `tms_raw_stream` 문자열을 줄바꿈 기준으로 잘라 키워드 리스트 생성
+  - 언론사별 진영 매핑 후 키워드 빈도 집계
+
+---
+
+## 8. 설치 및 실행
+
+### 8.1 요구 사항
+
+- Python **3.10**
+- [Poetry](https://python-poetry.org/)
+- BIGKINDS / Naver API 키
+
+### 8.2 환경 변수 설정 (`.env.local` 예시)
+
+```env
+X_NAVER_CLIENT_ID=your_naver_client_id
+X_NAVER_CLIENT_SECRET=your_naver_client_secret
+BIGKINDS_API_KEY=your_bigkinds_api_key
+
+# 선택: 언론사 진영 분류 (JSON 문자열 형태 추천)
+BLUE_PROVIDERS=["경향신문", "한겨레"]
+RED_PROVIDERS=["조선일보", "동아일보"]
