@@ -179,7 +179,7 @@ Nampyo News is a web-based system that analyzes framing differences between prog
 | 이름  | 역할                    | GitHub                                 |
 | --- | --------------------- | -------------------------------------- |
 | 김선표 | 백엔드 · 데이터 파이프라인 · 인프라 | [@Roflaff](https://github.com/Roflaff) |
-| 남민지 | 기획 · 프론트엔드 · 미디어 분석   | [@YOUR_ID](https://github.com/YOUR_ID) |
+| 남민지 | 기획 · 프론트엔드 · 미디어 분석   | [@SouthMInji](https://github.com/SouthMinji) |
 
 ---
 
@@ -222,6 +222,6 @@ BIGKINDS API 사용이 어려워진 환경을 고려해,
 
 ## 🤝 Contributing & 문의
 
-* 이 프로젝트는 **[@YOUR_ID](https://github.com/YOUR_ID)** 와 **[@Roflaff](https://github.com/Roflaff)** 가 함께 개발하고 있습니다.
+* 이 프로젝트는 **[@SouthMinji](https://github.com/SouthMinji)** 와 **[@Roflaff](https://github.com/Roflaff)** 가 함께 개발하고 있습니다.
 * 버그 리포트, 기능 제안, 연구·취재 협업 제안 등은 GitHub **Issues**에 남겨주세요.
 * 언론, 데이터 저널리즘, 시각화에 관심 있는 분들의 PR을 환영합니다. 🙌
