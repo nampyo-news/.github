@@ -26,7 +26,8 @@ Nampyo News is a web-based system that analyzes framing differences between prog
 * 기사에서 추출된 **키워드(명사)** 를 진영별로 집계한 뒤
 * **상위 키워드 TOP 10 + 비율(%)** 을 시각화하여
 
-각 진영이 **어떤 단어로 이슈를 이야기하는지** 보여주는 프로젝트입니다.
+각 진영이 **<u>어떤 관점으로 이 이슈를 보는지</u>** 보여주는 프로젝트입니다.
+
 
 ---
 
@@ -176,10 +177,21 @@ Nampyo News is a web-based system that analyzes framing differences between prog
 
 ## 5️⃣ 팀 정보 (Team)
 
-| 이름  | 역할                    | GitHub                                 |
-| --- | --------------------- | -------------------------------------- |
-| 김선표 | 백엔드 · 데이터 파이프라인 · 인프라 | [@Roflaff](https://github.com/Roflaff) |
-| 남민지 | 기획 · 프론트엔드 · 미디어 분석   | [@SouthMInji](https://github.com/SouthMinji) |
+### 🙋‍♂️🙋‍♀️ Team Photos
+
+| 김선표 | 남민지 |
+|-------|--------|
+| ![김선표 사진](./docs/team-seonpyo.png) | ![남민지 사진](./docs/team-minji.png) |
+
+> `./docs/` 폴더에 `team-seonpyo.png`, `team-minji.png` 파일을 넣으면 위에 사진이 표시됩니다.
+
+### 👥 Team Roles
+
+| 이름   | 역할                              | GitHub                                       |
+|--------|-----------------------------------|----------------------------------------------|
+| 김선표 | 백엔드 · 데이터 파이프라인 · 인프라 | [@Roflaff](https://github.com/Roflaff)       |
+| 남민지 | 기획 · 프론트엔드 · 미디어 분석     | [@SouthMInji](https://github.com/SouthMInji) |
+
 
 ---
 
