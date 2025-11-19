@@ -177,7 +177,7 @@
 
 | 김선표 | 남민지 |
 |-------|--------|
-| ![김선표 사진](./docs/team-seonpyo.png) | ![남민지 사진](./docs/team-minji.png) |
+| ![김선표 사진](./docs/team-seonpyo.png) | ![남민지 사진](./image/남민지_이력서사진.jpg) |
 
 > `./docs/` 폴더에 `team-seonpyo.png`, `team-minji.png` 파일을 넣으면 위에 사진이 표시됩니다.
 
