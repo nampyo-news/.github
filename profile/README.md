@@ -159,15 +159,15 @@
 
 ### 4.1 메인 대시보드
 
-![메인 화면 예시](./docs/screenshot-main.png)
+![메인 화면 예시](./profile/image/메인화면.png)
 
 ### 4.2 진영별 키워드 비교 화면
 
-![키워드 비교 예시](./docs/screenshot-keywords.png)
+![키워드 비교 예시](./profile/image/진영별 키워드 비교화면.png)
 
 ### 4.3 실시간 뉴스 스트림 화면
 
-![실시간 뉴스 스트림 예시](./docs/screenshot-sse.png)
+![실시간 뉴스 스트림 예시](./profile/image/실시간 뉴스 스트림.png)
 
 ---
 
