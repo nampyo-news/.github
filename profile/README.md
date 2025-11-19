@@ -10,8 +10,8 @@
 
 ## 📝 Abstract (논문 초록)
 
-**Abstract (예시)**
-Nampyo News is a web-based system that analyzes framing differences between progressive and conservative newspapers in South Korea. Using news data related to the Yellow Envelope Act (노란봉투법), the system collects articles from four major dailies, classifies them into political camps, and visualizes keyword distributions for each side. Based on 744 articles published over 119 days, the system extracts noun-based keywords from BIGKINDS data and aggregates their frequencies by political camp. The results show that progressive media emphasize labor-related concepts such as “노동자”, “원청”, and “교섭”, whereas conservative media focus more on political and economic actors such as “민주당”, “대표”, and “기업”. By providing these patterns through an interactive web interface, Nampyo News aims to support both academic research on media framing and public understanding of how news narratives differ across ideological lines.
+**Summary**
+본 연구는 국내 보수 성향 언론(조선일보, 동아일보)과 진보 성향 언론(경향신문, 한겨레)이 동일 사회적 이슈인 '노란봉투법'을 보도하는 과정에서 나타나는 프레이밍 차이를 빅데이터 기반의 자동 수집 및 계량적 내용 분석 시스템을 통해 실증적으로 규명했다. 분석 결과, 진보 언론은 '노동자', '원청' 등 권리 담론에 기반하여 노동권 확대를 강조한 반면, 보수 언론은 '기업', '민주당' 등 부담 담론 및 정치화 프레임을 사용하며 경제적 영향과 정파적 입법 과정을 부각했다. 이러한 극명한 키워드 선택 및 빈도 차이는 언론의 이념적 편향성이 미시적 수준에서 구조적으로 작동함을 보여주며, 본 연구를 통해 구축된 웹 플랫폼은 일반 시민들이 이러한 언론사별 관점 차이를 직관적으로 비교하고 비판적 미디어 리터러시를 향상시키는 데 기여할 것으로 기대된다.
 
 ---
 
@@ -22,9 +22,9 @@ Nampyo News is a web-based system that analyzes framing differences between prog
 
 남표뉴스는 한국 주요 일간지 기사들을 모아서
 
-* 언론사를 **진보(blue) / 보수(red)** 로 나누고
-* 기사에서 추출된 **키워드(명사)** 를 진영별로 집계한 뒤
-* **상위 키워드 TOP 10 + 비율(%)** 을 시각화하여
+* 언론사를 <font color="blue">진보(blue)</font> / <font color="red">보수(red)</font> 로 나누고
+* 기사에서 추출된 키워드(명사) 를 진영별로 집계한 뒤
+* **상위 키워드 TOP 10 + 비율(%)을 시각화하여
 
 각 진영이 **<u>어떤 관점으로 이 이슈를 보는지</u>** 보여주는 프로젝트입니다.
 
@@ -84,8 +84,8 @@ Nampyo News is a web-based system that analyzes framing differences between prog
 
 2. **진영 분류**
 
-   * 경향신문 · 한겨레 → **blue (진보)**
-   * 조선일보 · 동아일보 → **red (보수)**
+   * 경향신문 · 한겨레 → <span style="color: blue;">**blue (진보)** </span>
+   * 조선일보 · 동아일보 → <span style="color: red;">**red (보수)** </span>
 
 3. **키워드 추출/정리**
 
@@ -157,9 +157,6 @@ Nampyo News is a web-based system that analyzes framing differences between prog
 ---
 
 ## 4️⃣ Web UI & Screenshots (작동 화면)
-
-> 실제 화면을 README에 함께 보여주려면,
-> `./docs` 폴더에 이미지를 넣고 아래 경로만 맞춰주면 됩니다.
 
 ### 4.1 메인 대시보드
 
