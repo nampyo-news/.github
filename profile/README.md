@@ -159,15 +159,15 @@
 
 ### 4.1 메인 대시보드
 
-![메인 화면 예시](./profile/image/메인화면.png)
+![메인 화면 예시](./profile/image/main.png)
 
 ### 4.2 진영별 키워드 비교 화면
 
-![키워드 비교 예시](./profile/image/진영별 키워드 비교화면.png)
+![키워드 비교 예시](./profile/image/compare.png)
 
 ### 4.3 실시간 뉴스 스트림 화면
 
-![실시간 뉴스 스트림 예시](./profile/image/실시간 뉴스 스트림.png)
+![실시간 뉴스 스트림 예시](./profile/image/stream.png)
 
 ---
 
@@ -177,7 +177,7 @@
 
 | 김선표 | 남민지 |
 |-------|--------|
-| ![김선표 사진](./docs/team-seonpyo.png) | <img src="./image/남민지_이력서사진.jpg" width="120" alt="남민지 사진" /> | 
+| <img src="./profile/image/sunpyo.jpg" width="120" alt="김선표 사진" /> | <img src="./image/남민지_이력서사진.jpg" width="120" alt="Team member Minji" /> | 
 
 > `./docs/` 폴더에 `team-seonpyo.png`, `team-minji.png` 파일을 넣으면 위에 사진이 표시됩니다.
 
