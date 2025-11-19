@@ -179,7 +179,7 @@
 |-------|--------|
 | <img src="./image/sunpyo.jpg" width="120" alt="Team member Sumnpyo" /> | <img src="./image/남민지_이력서사진.jpg" width="120" alt="Team member Minji" /> | 
 
-> `./docs/` 폴더에 `team-seonpyo.png`, `team-minji.png` 파일을 넣으면 위에 사진이 표시됩니다.
+
 
 ### 👥 Team Roles
 
